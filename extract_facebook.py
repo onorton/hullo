@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import csv
 from collections import OrderedDict
 import time
-
+import json
 
 def read_file(file):
     """Read a text file and return its contents as a list of lines"""
@@ -18,9 +18,12 @@ def extract_facebook(html_list):
     
     soup = BeautifulSoup(html_str, 'html.parser')
     
-    messages = list()
-    
+    messages = []
+     
     for i, thread in enumerate(soup.find_all('div', class_='thread')):
+        convo = {}
+        convo['conversation_id'] = i
+        convo_messages = []
         for j, message in enumerate(reversed(thread.find_all('div', class_='message'))):
             sender = message.find('span', class_='user').string
             timestamp = message.find('span', class_='meta').string
@@ -31,28 +34,30 @@ def extract_facebook(html_list):
             if text:
                 text = text.replace('\r\n', ' ')
                 text = text.replace('\n', ' ')
-            messages.append(OrderedDict([('thread', i), 
-                                         ('message', j), 
-                                         ('sender', sender), 
-                                         ('timestamp', timestamp), 
-                                         ('text', text)]))
-    
+            message = {}
+            message['message_id'] = j
+            message['sender'] = sender
+            message['timestamp'] = timestamp
+            message['content'] = text
+            convo_messages.append(message)
+                                        
+        convo['messages'] = convo_messages
+        messages.append(convo)
+        
+    messages = json.dumps(messages)
     return messages
 
 
 def write_file(messages, file):
     """Write messages to CSV"""
     with open(file, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
-        for line in messages:
-            writer.writerow([value for value in line.values()])
-
+        f.write(messages)
 
 def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("infile", help="Facebook chat HTML file")
-    parser.add_argument("outfile", help="output CSV file")
+    parser.add_argument("outfile", help="output JSON file")
     args = parser.parse_args()
     
     contents = read_file(args.infile)

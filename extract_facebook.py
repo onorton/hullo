@@ -9,7 +9,9 @@ def read_file(file):
     with open(file, 'r', encoding = 'utf-8') as f:
         contents = f.readlines()
     return contents
-
+def get_Json(name):
+    contents = read_file(name)
+    return extract_facebook(contents)
 
 def extract_facebook(html_list):
     """Extract a Facebook chat HTML file to a list of dicts"""
@@ -39,6 +41,7 @@ def extract_facebook(html_list):
             message['sender'] = sender
             message['timestamp'] = timestamp
             message['content'] = text
+            message['understanding'] = {}
             convo_messages.append(message)
                                         
         convo['messages'] = convo_messages

@@ -8,7 +8,9 @@ def read_file(file):
     with open(file, 'r', encoding = 'utf-8') as f:
         contents = f.readlines()
     return contents
-
+def get_Json(name)
+    contents = read_file(name)
+    return extract_google(contents)
 
 def extract_google(json_list):
     """Extract a Google Hangouts JSON file to a list of dicts"""
@@ -19,7 +21,10 @@ def extract_google(json_list):
     messages = list()
     
     for i, conversation in enumerate(json_dict['conversation_state']):
-        for person in conversation['conversation_state']['conversation']['participant_data']:
+        convo = {}
+        convo['conversation_id'] = i
+        convo_messages = []
+	for person in conversation['conversation_state']['conversation']['participant_data']:
             person_id = person['id']['chat_id']
             people[person_id] = person.get('fallback_name', '')
         for j, message in enumerate(conversation['conversation_state']['event']):
@@ -27,17 +32,19 @@ def extract_google(json_list):
             if text:
                 text = text.replace('\r\n', ' ')
                 text = text.replace('\n', ' ')
-            timestamp = message['timestamp']
-            sender_id = message['sender_id']['chat_id']
-            sender = people.get(sender_id, '')
-            messages.append(OrderedDict([('thread', i), 
-                                         ('message', j), 
-                                         ('sender', sender), 
-                                         ('timestamp', timestamp), 
-                                         ('text', text)]))
-    
+            message = {}
+            message['message_id'] = j
+            message['sender'] = sender
+            message['timestamp'] = timestamp
+            message['content'] = text
+            message['understanding'] = {}
+            convo_messages.append(message)
+                                        
+        convo['messages'] = convo_messages
+        messages.append(convo)
+        
+    messages = json.dumps(messages)
     return messages
-
 
 def write_file(messages, file):
     """Write messages to CSV"""

@@ -25,7 +25,7 @@ def extract_facebook(html_list):
             sender = message.find('span', class_='user').string
             timestamp = message.find('span', class_='meta').string
             if timestamp:
-                timestamp = time.strptime(timestamp[:-4], '%A, %B %d, %Y at %H:%M%p')
+                timestamp = time.strptime(timestamp[:timestamp.rfind('C')+1], '%A, %d %B %Y at %H:%M %Z')
                 timestamp = time.mktime(timestamp)
             text = message.next_sibling.string
             if text:

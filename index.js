@@ -65,4 +65,7 @@
 
 	);
 
+exports.handler = function(event, context) {
+
+};
 module.exports = app;

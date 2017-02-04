@@ -1,0 +1,2 @@
+ChatIntent {So what are you doing today|Message}
+ChatIntent {I like beans|Message}

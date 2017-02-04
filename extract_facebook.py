@@ -9,9 +9,10 @@ def read_file(file):
     with open(file, 'r', encoding = 'utf-8') as f:
         contents = f.readlines()
     return contents
-def get_Json(name):
+def get_Json(name): 
     contents = read_file(name)
-    return extract_facebook(contents)
+    return json.loads(extract_facebook(contents))
+
 
 def extract_facebook(html_list):
     """Extract a Facebook chat HTML file to a list of dicts"""
@@ -68,6 +69,7 @@ def main():
     messages = extract_facebook(contents)
     
     write_file(messages, args.outfile)
+
 
 
 if __name__ == '__main__':

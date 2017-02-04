@@ -8,9 +8,10 @@ def read_file(file):
     with open(file, 'r', encoding = 'utf-8') as f:
         contents = f.readlines()
     return contents
-def get_Json(name)
+
+def get_Json(name):
     contents = read_file(name)
-    return extract_google(contents)
+    return json.loads(extract_google(contents))
 
 def extract_google(json_list):
     """Extract a Google Hangouts JSON file to a list of dicts"""
@@ -24,7 +25,7 @@ def extract_google(json_list):
         convo = {}
         convo['conversation_id'] = i
         convo_messages = []
-	for person in conversation['conversation_state']['conversation']['participant_data']:
+        for person in conversation['conversation_state']['conversation']['participant_data']:
             person_id = person['id']['chat_id']
             people[person_id] = person.get('fallback_name', '')
         for j, message in enumerate(conversation['conversation_state']['event']):
@@ -32,6 +33,9 @@ def extract_google(json_list):
             if text:
                 text = text.replace('\r\n', ' ')
                 text = text.replace('\n', ' ')
+            timestamp = message['timestamp']
+            sender_id = message['sender_id']['chat_id']
+            sender = people.get(sender_id, '')
             message = {}
             message['message_id'] = j
             message['sender'] = sender

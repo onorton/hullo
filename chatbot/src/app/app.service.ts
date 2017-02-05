@@ -12,7 +12,7 @@ import 'rxjs/add/operator/do';  // for debugging
 @Injectable()
 export class AppService {
 
-  API = 'htpps://34.250.6.241:5000';
+  API = 'http://34.250.6.241:5000';
 
   /**
    * Creates a new NameListService with the injected Http.

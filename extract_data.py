@@ -27,6 +27,17 @@ def add_linguistics(data):
         pass
     return data
 
+def convert_for_ml(filename):
+    strings = []
+    with open(filename, 'r') as f:
+        data = json.load(f)
+        for convo in data:
+            for message in convo['messages']:
+                if('content' in message):
+                    strings.append(message['content'])
+
+    return strings
+
 def main(linguistics=False):
     import argparse
     parser = argparse.ArgumentParser()

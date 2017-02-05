@@ -1,8 +1,10 @@
 import json
+from flask_cors import CORS, cross_origin
 from interface import BasicChatBot
 
 from flask import Flask, url_for, request, abort
 app = Flask(__name__)
+CORS(app)
 chat_bot = BasicChatBot()
 chat_bot.process('data/message_data.json')
 

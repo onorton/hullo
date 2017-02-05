@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
+import { AppService } from './app.service';
 
 
 @Component({
@@ -7,7 +8,7 @@ import { MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, AfterViewInit{
+export class AppComponent implements OnInit {
   title = 'Hullo Clever Chatbot!';
 
   name = ''
@@ -27,38 +28,21 @@ export class AppComponent implements OnInit, AfterViewInit{
     'Large size in stockings is hard to sell.'
   ]
 
-  constructor(private dialog:MdDialog) {}
+  constructor(private as: AppService) {}
 
   ngOnInit() {
-    this.openDialog();
   }
 
-  openDialog() {
-    let dialogRef = this.dialog.open(DialogDialog,{
-      height: '400px', width: '600px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.name = result;
-    });
+  newConvo() {
+    this.as.startConversation()
+          .subscribe(
+            d => console.log(d)
+          )
   }
-
 
   submitChat(e: any) {
     console.log(e, this.chat_input);
     this.chat.unshift(this.chat_input);
     this.chat_input = '';
   }
-}
-
-@Component({
-  selector: 'dialog-dialog',
-  template: ``,
-})
-export class DialogDialog implements AfterViewInit{
-  constructor(public dialogRef: MdDialogRef<DialogDialog>) {}
-
-  ngAfterViewInit() {
-    console.log(this.dialogRef);
-  }
-
 }

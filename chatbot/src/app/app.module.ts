@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
-import { AppComponent, DialogDialog } from './app.component';
+import { AppComponent } from './app.component';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogDialog
   ],
   imports: [
     BrowserModule,
@@ -17,8 +17,7 @@ import { AppComponent, DialogDialog } from './app.component';
     HttpModule,
     MaterialModule.forRoot()
   ],
-  entryComponents: [DialogDialog],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

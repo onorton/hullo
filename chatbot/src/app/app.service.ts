@@ -10,9 +10,9 @@ import 'rxjs/add/operator/do';  // for debugging
  * This class provides the Query service with methods to read names and add names.
  */
 @Injectable()
-export class QueryService {
+export class AppService {
 
-  API = 'api';
+  API = 'htpps://34.250.6.241:5000';
 
   /**
    * Creates a new NameListService with the injected Http.
@@ -21,22 +21,8 @@ export class QueryService {
    */
   constructor(private http: Http) {}
 
-  getPagedList(query: string,
-               page: number,
-               size: number): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json'});
-    let options = new RequestOptions({ headers: headers });
-        return this.http.get(this.genUri('/api/people', [
-                                    {name: 'query', value: query},
-                                    {name: 'page', value: page},
-                                    {name: 'page_size', value: size}]),
-                                    options)
-                    .map((res: Response) => res.json())
-                    .catch(this.handleError);
-  }
-
-  getProfile(api: string) : Observable<any> {
-    return this.http.get(this.genUri(api))
+  startConversation() : Observable<any> {
+    return this.http.get(this.genUri('/conversation'))
                     .map((res:Response) => res.json())
                     .catch(this.handleError);
   }

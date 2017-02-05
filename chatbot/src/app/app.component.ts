@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
 
 
 @Component({
@@ -7,8 +7,10 @@ import {MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit{
   title = 'Hullo Clever Chatbot!';
+
+  name = ''
 
   chat_input = ''
 
@@ -25,10 +27,38 @@ export class AppComponent {
     'Large size in stockings is hard to sell.'
   ]
 
+  constructor(private dialog:MdDialog) {}
+
+  ngOnInit() {
+    this.openDialog();
+  }
+
+  openDialog() {
+    let dialogRef = this.dialog.open(DialogDialog,{
+      height: '400px', width: '600px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.name = result;
+    });
+  }
+
 
   submitChat(e: any) {
     console.log(e, this.chat_input);
     this.chat.unshift(this.chat_input);
     this.chat_input = '';
   }
+}
+
+@Component({
+  selector: 'dialog-dialog',
+  template: ``,
+})
+export class DialogDialog implements AfterViewInit{
+  constructor(public dialogRef: MdDialogRef<DialogDialog>) {}
+
+  ngAfterViewInit() {
+    console.log(this.dialogRef);
+  }
+
 }

@@ -5,12 +5,13 @@ import pprint
 
 class Linguistics(object):
 
-    def __init__(self, key, api):
-        self.api = api
+    def __init__(self):
+        self.api = 'https://westus.api.cognitive.microsoft.com/linguistics/v1.0'
+
         self.headers = {
             # Request headers
             'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key': key,
+            'Ocp-Apim-Subscription-Key': '4eb8ed1d0e5043428b02fbbbf72f79a1',
         }
         self.analyzers = [
             '4fa79af1-f22c-408d-98bb-b7d7aeef7f04', 
@@ -44,7 +45,5 @@ class Linguistics(object):
 
 
 if __name__ == '__main__':
-    key = '4eb8ed1d0e5043428b02fbbbf72f79a1'
-    api = 'https://westus.api.cognitive.microsoft.com/linguistics/v1.0'
-    l = Linguistics(key, api)
+    l = Linguistics()
     l.analyse_text('Hello my name is mickey!! What is yours?')

@@ -11,7 +11,7 @@ chat_bot.process('data/message_data.json')
 @app.route('/conversation')
 def new_conversation():
     uid = chat_bot.new_conversation()
-    return uid, 201
+    return uid
 
 @app.route('/conversation/<int:uid>', methods=['GET', 'POST'])
 def conversation(uid):
@@ -21,7 +21,7 @@ def conversation(uid):
         return json.dumps(chat_bot.get_conversation(uid))
     elif request.method == 'POST':
         
-        req = request.data.decode('utf-8')
+        req = request.data['message']
         return chat_bot.query(uid, req)
 
 if __name__ == '__main__':

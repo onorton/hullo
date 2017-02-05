@@ -15,12 +15,12 @@ var handlers = {
     },
     'ChatIntent': function() {
         var message = this.event.request.intent.slots.Message.value;
-        var respond = function(message) {return 'what\'s up.'}
+        var respond = function(message) {return message};
         var response = respond(message);
         console.log(message);
         console.log(response);
         
-	this.emit(":ask", response);
+	this.emit(":ask", response, response);
     },
     'SessionEndedRequest': function () {
         console.log('session ended!');

@@ -23,6 +23,7 @@ def extract_facebook(html_list):
     
     messages = []
      
+     
     for i, thread in enumerate(soup.find_all('div', class_='thread')):
         convo = {}
         convo['conversation_id'] = i
@@ -47,7 +48,6 @@ def extract_facebook(html_list):
                                         
         convo['messages'] = convo_messages
         messages.append(convo)
-        
     messages = json.dumps(messages)
     return messages
 

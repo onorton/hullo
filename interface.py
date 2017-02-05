@@ -1,4 +1,5 @@
 import json
+import subprocess
 
 class AbstractChatBot(object):
  
@@ -49,3 +50,40 @@ class BasicChatBot(AbstractChatBot):
   #      response = 'Basic Chat Bot says shut up, I dont want to anwser the question:' + query
   #      self.conversations[conversation_uid].append(response)
   #      return response
+
+class RNNChatBot(AbstractChatBot):
+    def __init__(self, name):
+        self.name = name
+        super().__init__()
+
+    # we already did our processing yonks ago
+    def process(self, json_file):
+        pass
+
+    def query(self, uid, q):
+        convo = self.get_conversation(uid)
+        convo.append(q)
+
+        jsons = ',\n'.join(json.dumps(msg, indent=2) for msg in convo) 
+        jsons = leftpadlines(jsons, '      ')
+
+        cmd = 'th sample.lua -checkpoint checkpoint.t7 -length 500 -start-from'
+
+        result = subprocess.run([cmd, "'"+jsons+"'"], encoding='utf-8')
+
+        try:
+            text = result.stdout[len(jsons):]
+            end = text.index('}')
+            response = json.loads(text)
+            convo.append(response)
+            return response
+        except ValueError:
+            return { 'message_id': 1
+                   , 'sender': self.name
+                   , 'timestamp': ''
+                   , 'content': 'I'm so confused!'
+                   , 'understanding': {}
+                   }
+        
+def leftpadlines(s, padding):
+    return ('\n' + padding).join(s.split('\n'))

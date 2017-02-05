@@ -1,6 +1,8 @@
 import json
 
 class AbstractChatBot(object):
+    data = []  
+ 
     def __init__(self):
         self.conversations = []
         pass
@@ -16,12 +18,18 @@ class AbstractChatBot(object):
         return self.conversations[uid]
 
     def process(self, json_file):
-        """MUST BE IMPLEMENTED"""
+        data = json.loads(json_file)
         print('Process some json file')
-
     def query(self, query):
-        """MUST BE IMPLEMENTED"""
         print('Accepted a query string', query)
+        found = False
+        for convo in data:
+            for  message in convo:
+                if found:
+                    return message['text']
+                found = query in message['text']
+                   
+       
         return 'Nothing'
 
 

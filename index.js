@@ -1,12 +1,12 @@
 'use strict';
 var Alexa = require("alexa-sdk");
-
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
     alexa.registerHandlers(handlers);
     alexa.execute();
 };
 
+var unirest = require('unirest');
 
 var handlers = {
     
@@ -15,8 +15,13 @@ var handlers = {
     },
     'ChatIntent': function() {
         var message = this.event.request.intent.slots.Message.value;
-        var respond = function(message) {return message};
-        var response = respond(message);
+        var rep = '';
+	unirest.post('http://34.250.6.241:5000')
+	.header('Accept', 'application/json')
+	.send({ "message": message })
+	.end(function (res) {
+             response = res.body
+	});
         console.log(message);
         console.log(response);
         

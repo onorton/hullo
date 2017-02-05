@@ -66,6 +66,8 @@ with tf.Session() as sess:
                 except:
                     continue
             in_.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
+            while conversation['messages'][length]['content'] is None:
+                length += 1
             out = map(lambda c: convert(ord(c)), conversation['messages'][length]['content'])
             out += [[0] * 10] * 5
             lenin = len(in_)

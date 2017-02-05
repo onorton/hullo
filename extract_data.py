@@ -14,7 +14,7 @@ def extract_data(facebook, google):
     return join_data(data)
 
 def join_data(data):
-    return reduce(operator.add, [], data)
+    return functools.reduce(operator.add, [], data)
 
 
 def write_file(messages, filename):
@@ -26,6 +26,17 @@ def add_linguistics(data):
     for k, v in data.items():
         pass
     return data
+
+def convert_for_ml(filename):
+    strings = []
+    with open(filename, 'r') as f:
+        data = json.load(f)
+        for convo in data:
+            for message in convo['messages']:
+                if('content' in message):
+                    strings.append(message['content'])
+
+    return strings
 
 def main(linguistics=False):
     import argparse

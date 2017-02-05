@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
+import { AppService } from './app.service';
 
 
 @Component({
@@ -7,8 +8,10 @@ import {MdDialog, MdToolbar, MdDialogRef, MdSnackBar} from '@angular/material';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Hullo Clever Chatbot!';
+
+  name = ''
 
   chat_input = ''
 
@@ -25,9 +28,21 @@ export class AppComponent {
     'Large size in stockings is hard to sell.'
   ]
 
+  constructor(private as: AppService) {}
+
+  ngOnInit() {
+  }
+
+  newConvo() {
+    this.as.startConversation()
+          .subscribe(
+            d => console.log(d)
+          )
+  }
 
   submitChat(e: any) {
     console.log(e, this.chat_input);
     this.chat.unshift(this.chat_input);
+    this.chat_input = '';
   }
 }

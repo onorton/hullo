@@ -27,6 +27,19 @@ export class AppService {
                     .catch(this.handleError);
   }
 
+
+  getConversation(uid) : Observable<any> {
+      return this.http.get(this.genUri('/conversation/' + uid))
+                    .map((res:Response) => res.json())
+                    .catch(this.handleError);
+  }
+
+  postMessageToConversation(uid, query) : Observable<any> {
+      return this.http.post(this.genUri('/conversation/' + uid), JSON.stringify(query))
+                    .map((res:Response) => res.json())
+                    .catch(this.handleError);
+  }
+
   /**
     * Handle HTTP error
     */

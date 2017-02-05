@@ -16,9 +16,10 @@
   height: 70%;
   /*border: 1px solid black;*/
   overflow-y: auto;
+  border-top: 1px dashed lightgray;
 }
 
-.card-panel {
+.card-panel-l {
   padding: 15px;
   width: 70%;
   margin-left: 2%;
@@ -26,12 +27,15 @@
   text-align: left;
 }
 
-.submit-input {
-
+.card-panel-r {
+  padding: 15px;
+  width: 70%;
+  margin-left: 2%;
+  margin-top: 1%;
+  text-align: right;
 }
 
 .btn-floating {
-  
   z-index: 10;
 }
 
@@ -39,4 +43,40 @@
   position: absolute;
   right: 10px;
   bottom: 10px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.bodybody {
+  position:relative;
+}
+
+.selectionbtn1 {
+  position: absolute;
+  top: 5%;
+  left: 3%;
+}
+
+h5 {
+  margin-top: 20px;
+}
+
+.arrow-right {
+  position: fixed;
+  top: 50%;
+  left: 92%;
+  transform: translate(-50%, -50%);
+}
+
+.arrow-left {
+  position: fixed;
+  top: 50%;
+  left: 8%;
+  transform: translate(-50%, -50%);
 }

@@ -1,42 +1,67 @@
 <div class="body md-app-background">
   <md-toolbar color="primary">
     <span>{{title}}</span>
-    <span class="example-spacer"></span>
-    <md-icon class="example-icon" (click)="newConvo()">input</md-icon>
+    <md-input-container class="example-full-width">
+      <input md-input [(ngModel)]="name" name="name">
+    </md-input-container>
   </md-toolbar>
 
-  <md-card class="container">
+  <div class="bodybody">
 
-    <md-card-header class="chat-header">
-      <md-card-title>Blaine Rogers</md-card-title>
-      <md-card-subtitle>Bot</md-card-subtitle> 
-    </md-card-header>
-    
-    <md-card-content class="chat-container">
-      <div class="card-panel teal" *ngFor="let s of chat">
-          <span class="white-text">{{s}}</span>
-      </div>
-    </md-card-content>
-    
-    <md-card-actions>
-      <div class="row submit-input">
-        <form class="col s12" (submit)="submitChat($event)">
-          <div class="row">
-            <div class="input-field col s9">
-              <i class="material-icons prefix">mode_edit</i>
-              <input id="icon_prefix" type="text" [(ngModel)]="chat_input" name="chat_input">
+    <md-card class="container">
+
+      <md-card-header class="chat-header">
+        <md-card-title>{{people[convo_id]}}</md-card-title>
+        <md-card-subtitle>Conversation: {{convo_id}}</md-card-subtitle>
+        <img md-card-avatar src="../assets/avatar.png" alt="avatar"  style="width:64px;height:64px;">
+        <span class="example-spacer"></span>
+        <!--<button class="btn waves-effect waves-light" type="button" name="action">
+          New Conversation <i class="material-icons right">input</i>
+        </button>-->
+      </md-card-header>
+      
+      <md-card-content class="chat-container">
+        <h5 *ngIf="chat.length === 0">No chat data for this conversation yet</h5>
+        <div *ngIf="chat.length !== 0" >
+          <div *ngFor="let s of chat">
+            <div class="card-panel-l teal" *ngIf="s.sender === name" >
+                <span class="white-text">{{s.sender}} > {{s.content}}</span>
             </div>
-            <div class="input-field col s3">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                  <i class="material-icons right">send</i>
-              </button>
+            <div class="card-panel-r indigo" *ngIf="s.sender !== name" >
+                <span class="white-text">{{s.content}} < {{s.sender}}</span>
             </div>
           </div>
-        </form>
-      </div>
-    </md-card-actions>
+        </div>
+      </md-card-content>
+      
+      <md-card-actions>
+        <div class="row submit-input">
+          <form class="col s12" (submit)="submitChat($event)">
+            <div class="row">
+              <div class="input-field col s9">
+                <i class="material-icons prefix">mode_edit</i>
+                <input id="icon_prefix" type="text" [(ngModel)]="chat_input" name="chat_input">
+              </div>
+              <div class="input-field col s3">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </md-card-actions>
 
-  </md-card>
+    </md-card>
 
+    <div class='arrow-right' *ngIf="convo_id < people.length - 1" (click)="nextPerson()">
+      <button><img src='../assets/arrow-right.png' style="width:128px;height:128px;" alt='arrow-right'></button>
+    </div>
+
+    <div class='arrow-left' *ngIf="convo_id > 0" (click)="previousPerson()">
+      <button><img src='../assets/arrow-left.png' style="width:128px;height:128px;" alt='arrow-right'></button>
+    </div>
+
+  </div>
 </div>
 

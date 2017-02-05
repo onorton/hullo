@@ -14,7 +14,7 @@ def extract_data(facebook, google):
     return join_data(data)
 
 def join_data(data):
-    return reduce(operator.add, [], data)
+    return functools.reduce(operator.add, [], data)
 
 
 def write_file(messages, filename):

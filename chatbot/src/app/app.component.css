@@ -1,0 +1,31 @@
+.container{
+  width: 70%;
+  height: 70%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.chat-header {
+  height: 10%;
+  /*border: 1px solid black;*/
+}
+
+.chat-container {
+  height: 70%;
+  /*border: 1px solid black;*/
+  overflow-y: auto;
+}
+
+.card-panel {
+  padding: 15px;
+  width: 70%;
+  margin-left: 2%;
+  margin-top: 1%;
+  text-align: left;
+}
+
+.submit-input {
+
+}

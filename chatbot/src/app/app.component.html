@@ -1,0 +1,39 @@
+<div class="body md-app-background">
+  <md-toolbar color="primary">
+    <span>{{title}}</span>
+  </md-toolbar>
+
+  <md-card class="container">
+
+    <md-card-header class="chat-header">
+      <md-card-title>Blaine Rogers</md-card-title>
+      <md-card-subtitle>Bot</md-card-subtitle> 
+    </md-card-header>
+    
+    <md-card-content class="chat-container">
+      <div class="card-panel teal" *ngFor="let s of chat">
+          <span class="white-text">{{s}}</span>
+      </div>
+    </md-card-content>
+    
+    <md-card-actions>
+      <div class="row submit-input">
+        <form class="col s12" (submit)="submitChat($event)">
+          <div class="row">
+            <div class="input-field col s9">
+              <i class="material-icons prefix">mode_edit</i>
+              <input id="icon_prefix" type="text" [(ngModel)]="chat_input" name="chat_input">
+            </div>
+            <div class="input-field col s3">
+              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </md-card-actions>
+
+  </md-card>
+</div>
+

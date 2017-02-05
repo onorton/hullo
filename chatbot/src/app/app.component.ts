@@ -29,5 +29,6 @@ export class AppComponent {
   submitChat(e: any) {
     console.log(e, this.chat_input);
     this.chat.unshift(this.chat_input);
+    this.chat_input = '';
   }
 }

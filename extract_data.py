@@ -51,7 +51,7 @@ def main(linguistics=False):
     if(linguistics):
         messages = add_linguistics(messages)
  
-    write_file(json.dumps(messages), args.outfile)
+    write_file(json.dumps(messages, indent=2), args.outfile)
 
 
 if __name__ == '__main__':

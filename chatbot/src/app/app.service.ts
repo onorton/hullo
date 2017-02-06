@@ -12,7 +12,7 @@ import 'rxjs/add/operator/do';  // for debugging
 @Injectable()
 export class AppService {
 
-  API = 'http://34.250.6.241:5000';
+  API = 'http://battle.horse:5000';
 
   /**
    * Creates a new NameListService with the injected Http.
@@ -34,8 +34,14 @@ export class AppService {
                     .catch(this.handleError);
   }
 
+
+
+
   postMessageToConversation(uid, query) : Observable<any> {
-      return this.http.post(this.genUri('/conversation/' + uid), JSON.stringify(query))
+      let headers = new Headers({"content-type":"application/json"});
+      let options = new RequestOptions({headers: headers});
+      console.log(query);
+      return this.http.post(this.genUri('/conversation/' + uid), JSON.stringify(query), options)
                     .map((res:Response) => res.json())
                     .catch(this.handleError);
   }

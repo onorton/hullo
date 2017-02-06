@@ -12,7 +12,7 @@
 
       <md-card-header class="chat-header">
         <md-card-title>{{people[convo_id]}}</md-card-title>
-        <md-card-subtitle>Conversation: {{convo_id}}</md-card-subtitle>
+        <md-card-subtitle>Conversation: {{convo_id+1}}<small> out of {{people.length}}</small></md-card-subtitle>
         <img md-card-avatar src="../assets/avatar.png" alt="avatar"  style="width:64px;height:64px;">
         <span class="example-spacer"></span>
         <!--<button class="btn waves-effect waves-light" type="button" name="action">
@@ -25,10 +25,10 @@
         <div *ngIf="chat.length !== 0" >
           <div *ngFor="let s of chat">
             <div class="card-panel-l teal" *ngIf="s.sender === name" >
-                <span class="white-text">{{s.sender}} > {{s.content}}</span>
+                <span class="white-text"><strong>{{s.sender}}</strong> > {{s.content}}</span>
             </div>
             <div class="card-panel-r indigo" *ngIf="s.sender !== name" >
-                <span class="white-text">{{s.content}} < {{s.sender}}</span>
+                <span class="white-text">{{s.content}} < <strong>{{s.sender}}</strong></span>
             </div>
           </div>
         </div>

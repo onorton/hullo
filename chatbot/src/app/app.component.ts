@@ -11,7 +11,7 @@ import { AppService } from './app.service';
 export class AppComponent implements OnInit {
   title = 'Hullo Clever Chatbot!';
 
-  people = ['Blaine Rogers', 'Shakespeare']
+  people = ['Blaine Rogers', 'Shakespeare', 'Mickey Mouse']
 
   name = 'Bob';
 
@@ -24,6 +24,9 @@ export class AppComponent implements OnInit {
   constructor(private as: AppService) {}
 
   ngOnInit() {
+    // setInterval(() => 
+    //   this.getConvo(this.convo_id), 5000
+    // );
     this.getConvo(this.convo_id);
   }
 
@@ -52,8 +55,11 @@ export class AppComponent implements OnInit {
     this.as.getConversation(id)
           .subscribe(
             d => {
-              this.chat = d['messages'] != undefined ? d['messages'] : [];
+              this.chat = d;
               console.log(this.chat)
+            },
+            error => {
+              this.newConvo()
             }
           )
   }
@@ -62,7 +68,7 @@ export class AppComponent implements OnInit {
     if(this.chat_input == '') {
       return;
     }
-    
+
     let chatJson = {
       "message_id" : this.chat.length,
       "sender" : this.name,
@@ -77,5 +83,6 @@ export class AppComponent implements OnInit {
                 }
             )
     this.chat_input = '';
+    // this.getConvo(this.convo_id);
   }
 }
